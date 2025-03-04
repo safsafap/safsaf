@@ -20,15 +20,7 @@ android {
     kotlinOptions {
         jvmTarget = 17
     }
-
-    signingConfigs {
-        release {
-           storeFile file(System.getenv("storeFile") ?: "../app/my-release-key.jks")
-            storePassword System.getenv("storePassword") ?: "123456"
-            keyAlias System.getenv("keyAlias") ?: "my-key-alias"
-            keyPassword System.getenv("keyPassword") ?: "123456"
-        }
-    }
+   
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
