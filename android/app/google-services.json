@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "28849367005",
+    "project_id": "safsaftam-e9ecb",
+    "storage_bucket": "safsaftam-e9ecb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:28849367005:android:d4800d1fcdacc148557834",
+        "android_client_info": {
+          "package_name": "com.saftam.store"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9ifc84m11DuGWwi1xNLPJeBjvdcGxVLA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
