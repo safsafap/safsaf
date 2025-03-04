@@ -1,0 +1,11 @@
+flutter_native_splash:
+  color: "#ffffff"  # Light mode background color
+  background_image: "assets/app.png" # Light mode background image (if you prefer this over color)
+
+  # Light mode image (if you want a separate image on top of the background)
+  # image: assets/splash.png
+
+  android_12:
+    image: assets/app.png # Android 12 splash image (important!)
+    color: "#ffffff" # Android 12 background color
+    #icon_background_color: "#111111" # Optional: Background color behind your app icon on Android 12
