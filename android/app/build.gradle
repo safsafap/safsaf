@@ -21,6 +21,14 @@ android {
         jvmTarget = 17
     }
    
+    signingConfigs {
+        release {
+            storeFile file("my-release-key.jks") // Path to your keystore file
+            storePassword "123456" // Keystore password
+            keyAlias "my-key-alias" // Key alias
+            keyPassword "123456" // Key password
+        }
+    }
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
