@@ -6,6 +6,7 @@ class OrderModel {
   List<int> products, quantity;
   List<double> prices;
   double total;
+  bool isGrossist;
 
   OrderModel(
       {required this.user_id,
@@ -13,10 +14,12 @@ class OrderModel {
       required this.products,
       required this.shipping,
       required this.quantity,
+
+      required this.isGrossist,
       required this.total});
 
   static OrderModel fromCart(
-      {required List<CartModel> list, required double total, required int id}) {
+      {required List<CartModel> list, required double total, required int id,required bool isGrossist}) {
     List<int> product_ids = [];
     List<double> product_prices = [];
     List<int> product_quantity = [];
@@ -32,6 +35,7 @@ class OrderModel {
         products: product_ids,
         shipping: 0,
         total: total,
+        isGrossist: isGrossist,
         quantity: product_quantity);
   }
 
@@ -42,7 +46,8 @@ class OrderModel {
       "product_list": products,
       "total": total,
       "quantity": quantity,
-      "shipping": shipping
+      "shipping": shipping,
+      "gros": isGrossist?1:0,
     };
   }
 }

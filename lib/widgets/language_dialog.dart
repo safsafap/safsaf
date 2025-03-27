@@ -18,7 +18,7 @@ class LanguageDialog extends StatelessWidget {
           child: ListTile(
             title: Text("English"),
             onTap: () async {
-              await _languageService.changeLanguage(lang: 'en', country: 'US');
+              await _languageService.changeLanguage(lang: 'en');
               Navigator.pop(context);
             },
             leading: Icon(Icons.language),
@@ -27,7 +27,7 @@ class LanguageDialog extends StatelessWidget {
         ListTile(
           title: Text("Francais"),
           onTap: () async {
-            await _languageService.changeLanguage(lang: 'fr', country: 'FR');
+            await _languageService.changeLanguage(lang: 'fr');
             var d = await _languageService.getLanguage();
 
             Navigator.pop(context);
@@ -37,7 +37,7 @@ class LanguageDialog extends StatelessWidget {
         ListTile(
           title: Text("العربية"),
           onTap: () async {
-            await _languageService.changeLanguage(lang: 'ar', country: 'AE');
+            await _languageService.changeLanguage(lang: 'ar');
 
             var d = _languageService.getLanguage();
             Navigator.pop(context);

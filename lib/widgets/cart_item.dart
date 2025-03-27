@@ -22,7 +22,7 @@ class CartItem extends StatefulWidget {
 class _CartItemState extends State<CartItem> {
   late CartController _controller;
 
-  ValueNotifier<int> quantity = ValueNotifier<int>(1);
+  ValueNotifier<int> quantity = ValueNotifier<int>(2);
 
   @override
   void initState() {
@@ -127,7 +127,7 @@ class _CartItemState extends State<CartItem> {
                     builder: (context, value, child) => Text(value.toString())),
                 IconButton(
                     onPressed: () {
-                      if (quantity.value > 1) {
+                      if (quantity.value > widget.cartModel.min_commande) {
                         quantity.value--;
                         widget.cartModel.quantity = quantity.value;
 

@@ -1,20 +1,17 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:connection_notifier/connection_notifier.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
 
 import 'package:multi_vendor/controllers/account_controller.dart';
 import 'package:multi_vendor/controllers/cart_controller.dart';
 import 'package:multi_vendor/controllers/index_controller.dart';
 import 'package:multi_vendor/controllers/location_controller.dart';
+import 'package:multi_vendor/controllers/msetting_controller.dart' as s;
 import 'package:multi_vendor/firebase_options.dart';
 import 'package:multi_vendor/main_constant.dart';
 import 'package:multi_vendor/screens/accuel_screen.dart';
-import 'package:multi_vendor/screens/categorie_screen.dart';
-import 'package:multi_vendor/screens/confirme_reset.dart';
 import 'package:multi_vendor/screens/location_picker.dart';
 import 'package:multi_vendor/screens/no_internet_screen.dart';
 import 'package:multi_vendor/screens/orders_screen.dart';
@@ -25,7 +22,6 @@ import 'package:multi_vendor/screens/pages/profile_screen.dart';
 import 'package:multi_vendor/screens/reset_password_screen.dart';
 import 'package:multi_vendor/screens/signup_screen.dart';
 import 'package:get/get.dart';
-import 'package:multi_vendor/screens/server_busy.dart';
 import 'package:multi_vendor/services/change_language.dart';
 import 'package:multi_vendor/translator/app-translations.dart';
 
@@ -36,6 +32,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await FirebaseMessaging.instance.requestPermission();
+
+
 
   runApp(const MyApp());
 }
@@ -46,10 +45,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Get.put(s.MSettingController(), tag: "setting");
     Get.put(AccountController(), tag: "account");
     Get.put(CartController(), tag: "cart");
     Get.put(IndexController(), tag: "index");
     Get.put(LocationController(), tag: "location");
+    
     return GetMaterialApp(
       title: 'Safsaf',
       defaultTransition: Transition.cupertino,
@@ -71,13 +72,14 @@ class MyApp extends StatelessWidget {
           seedColor: MAIN_COLOR, // Customize the seed color
           brightness: Brightness.light, // Light theme
         ),
-        appBarTheme: AppBarTheme(
+        appBarTheme:const AppBarTheme(
           scrolledUnderElevation: 100,
           surfaceTintColor: MAIN_COLOR,
           backgroundColor: Colors.white,
         ),
       ),
       home: ConnectionNotifierToggler(
+          
           loading: AccuelScreen(),
           disconnected: const NoInternetScreen(),
           connected: AccuelScreen()),

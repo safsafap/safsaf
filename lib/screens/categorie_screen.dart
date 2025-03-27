@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:multi_vendor/controllers/msetting_controller.dart';
 import 'package:multi_vendor/main_constant.dart';
 import 'package:multi_vendor/models/categorie_model.dart';
 import 'package:multi_vendor/models/product_model.dart';
@@ -21,6 +22,7 @@ class _CategorieScreenState extends State<CategorieScreen> {
   int _currentPage = 1;
   List<Product> _list = [];
   bool _loading = true;
+  MSettingController msettingController = Get.find(tag: "setting");
 
   @override
   void initState() {

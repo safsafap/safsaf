@@ -1,4 +1,5 @@
 import 'package:easy_url_launcher/easy_url_launcher.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:multi_vendor/controllers/account_controller.dart';
@@ -81,17 +82,23 @@ class DrawerWidget extends StatelessWidget {
                   Get.dialog(LanguageDialog());
                 }),
 
-                FutureBuilder<String>(
+            FutureBuilder<String>(
                 future: CallService().getNumber(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
-                    return _DrawerItem(title:  "Contacter nous".tr, icon: Icons.call, indexDrawer: 0, onClick:  () {
-                        EasyLauncher.call(number: snapshot.data ?? '');
-                      });
+                    return _DrawerItem(
+                        title: "Contacter nous".tr,
+                        icon: Icons.call,
+                        indexDrawer: 0,
+                        onClick: () {
+                          EasyLauncher.call(number: snapshot.data ?? '');
+                        });
                   }
-                  return _DrawerItem(title: "Contacter nous".tr, icon: Icons.call, indexDrawer: 0, onClick: (){
-                    
-                  });
+                  return _DrawerItem(
+                      title: "Contacter nous".tr,
+                      icon: Icons.call,
+                      indexDrawer: 0,
+                      onClick: () {});
                 }),
             // _DrawerItem(
             //     title: "Politique de confidentialite".tr,
@@ -127,7 +134,31 @@ class DrawerWidget extends StatelessWidget {
                   indexDrawer: 3,
                   trailing: false,
                   onClick: () {
-                    controller.Logout();
+                    Get.back();
+                    showCupertinoDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text("Logout".tr),
+                            content:
+                                Text("Are you sure you want to logout?".tr),
+                            actions: [
+                              TextButton(
+                                child: Text("No".tr),
+                                onPressed: () {
+                                  Get.back();
+                                },
+                              ),
+                              TextButton(
+                                child: Text("Yes".tr),
+                                onPressed: () {
+                                  Get.back();
+                                   controller.Logout();
+                                },
+                              ),
+                            ],
+                          );
+                        });
                   }),
             ),
           ],
@@ -151,9 +182,8 @@ class DrawerWidget extends StatelessWidget {
         },
         leading: Icon(
           icon,
-          color: title == "Supprime de compte".tr
-              ? Colors.redAccent
-              : MAIN_COLOR,
+          color:
+              title == "Supprime de compte".tr ? Colors.redAccent : MAIN_COLOR,
         ),
         trailing: trailing ? const Icon(Icons.keyboard_arrow_right) : null,
         title: Text(title),

@@ -235,27 +235,25 @@ class _LoginScreen extends State<LoginScreen> {
                 ),
               ),
 
-              const SizedBox(height: 60),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "you don't have an account ?".tr,
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Get.toNamed("/signup_screen");
-                    },
-                    child: Text(
-                      'Signup'.tr,
-                      style: TextStyle(
-                        color: MAIN_COLOR,
+              const SizedBox(height: 10),
+              OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: MAIN_COLOR),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                    ),
-                  ),
-                ],
-              ),
+                      fixedSize:
+                          Size(MediaQuery.sizeOf(context).width * .9, 50)),
+                  onPressed: () {
+                    Get.toNamed("/signup_screen");
+                  },
+                  child: Text(
+                    'create account'.tr,
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: MAIN_COLOR,
+                        fontWeight: FontWeight.bold),
+                  )),
             ],
           ),
         ),

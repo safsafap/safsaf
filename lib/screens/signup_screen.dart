@@ -87,8 +87,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 TextFormField(
                   controller: fullnameController,
                   validator: (value) {
-                    if (value == null || value.length < 6) {
-                      return 'Fullname must be at least 8 characters long'.tr;
+                    if (value == null || value.length < 3) {
+                      return 'Fullname must be at least 3 characters long'.tr;
                     }
                     return null;
                   },
@@ -259,7 +259,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               ),
                             )
                           : Text(
-                              "Signup".tr,
+                              'create account'.tr,
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
@@ -269,28 +269,28 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Vous avez un compte ?'.tr,
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text(
-                        'Login'.tr,
-                        style: TextStyle(
-                          color: MAIN_COLOR,
+                Divider(),
+                const SizedBox(height: 10),
+                OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                        side: BorderSide(color: MAIN_COLOR),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                      ),
-                    ),
-                  ],
-                ),
+                        fixedSize:
+                            Size(MediaQuery.sizeOf(context).width * .9, 50)),
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: Text(
+                      'Login'.tr,
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: MAIN_COLOR,
+                          fontWeight: FontWeight.bold),
+                    )),
               ],
             ),
           ),

@@ -29,7 +29,6 @@ class AccountController extends GetxController {
     var messaging = FirebaseMessaging.instance;
     try {
 
-      await messaging.requestPermission();
       await messaging.subscribeToTopic('all');
       await addHandler();
     } catch (e) {}
@@ -118,4 +117,5 @@ class AccountController extends GetxController {
     ));
     update();
   }
+  
 }

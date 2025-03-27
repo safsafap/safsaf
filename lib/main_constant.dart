@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-const API_LINK = "https://tam.zaki-dz.com";
+const API_LINK = "https://safsafdz.com";
 const LOGIN_ENDPOINT = "$API_LINK/user-login";
 const SIGNUP_ENDPOINT = "$API_LINK/user-registers";
 const PRODUCT_ENDPOINT = "$API_LINK/products";
@@ -20,3 +20,5 @@ const SEARCH = "$API_LINK/search";
 const REMOVE_ACCOUNT = "$API_LINK/user-delete";
 const MAIN_COLOR = Color(0xFF1dbac9);
 const ORANGE_COLOR = Color(0xFFff9700);
+const FORNISSEUR_ENDPOINT = "$API_LINK/grossists";
+const GROSIST_SEARCH = "$API_LINK/grossist-search";

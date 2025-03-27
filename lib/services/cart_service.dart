@@ -1,13 +1,27 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:multi_vendor/controllers/msetting_controller.dart';
 import 'package:multi_vendor/models/cart_model.dart';
 
 class CartService {
-  final GetStorage _storage = GetStorage(); // Initialize GetStorage
-  final String _cartKey = 'cartBox'; // Define a key for cart storage
+  final GetStorage _storage = GetStorage();
+  late String _cartKey;
+  late MSettingController settingController;
+
+  CartService() {
+    initKey();
+  }
+
+  void initKey() {
+    settingController = Get.find<MSettingController>(tag: "setting");
+
+    _cartKey = settingController.isGrossist ? "grossistCart" : "cart";
+  }
 
   // Add an item to the cart
   Future<void> addToCart(CartModel cartItem) async {
+    initKey();
+
     // Get the current cart data or initialize an empty map
     final Map<String, dynamic> cartData = _storage.read(_cartKey) ?? {};
 
@@ -21,6 +35,8 @@ class CartService {
   // Remove an item from the cart
   Future<void> removeFromCart(int id) async {
     // Get the current cart data
+    initKey();
+
     final Map<String, dynamic> cartData = _storage.read(_cartKey) ?? {};
 
     // Remove the item by its ID
@@ -32,23 +48,31 @@ class CartService {
 
   // Get all items in the cart
   Future<List<CartModel>> getCart() async {
-    // Read the current cart data
-      final GetStorage storage = GetStorage(); // Initialize GetStorage
+    initKey();
 
-    final Map<String, dynamic>? cartData = storage.read(_cartKey);
+    List<CartModel> cartItems = [];
+    try {
+      final GetStorage storage = GetStorage();
+      final Map<String, dynamic>? cartData = storage.read(_cartKey);
 
-    // Convert the data to a list of CartModel objects
-    if (cartData == null) {
-      return [];
-    }
+      if (cartData == null) return cartItems;
 
-    return cartData.values
-        .map((item) => CartModel.fromJson(Map<String, dynamic>.from(item)))
-        .toList();
+      for (var item in cartData.values) {
+        if (item is Map<dynamic, dynamic>) {
+          // تأكد أن البيانات صحيحة
+          CartModel cartItem = CartModel.fromJson(item);
+          cartItems.add(cartItem);
+          print("item id ${cartItem.id}");
+        }
+      }
+    } catch (e) {}
+    return cartItems;
   }
 
   // Get a specific item by product ID
   CartModel? getCartByProduct(int id) {
+    initKey();
+
     // Read the current cart data
     final Map<String, dynamic>? cartData = _storage.read(_cartKey);
 
@@ -62,6 +86,7 @@ class CartService {
 
   // Check if an item is in the cart
   Future<bool> isInCart(int id) async {
+    initKey();
     // Read the current cart data
     final Map<String, dynamic>? cartData = _storage.read(_cartKey);
     return cartData?.containsKey(id.toString()) ?? false;
@@ -69,12 +94,14 @@ class CartService {
 
   // Update an item in the cart
   Future<void> updateCart(CartModel cartItem) async {
+    initKey();
     // Use the same logic as addToCart
     await addToCart(cartItem);
   }
 
   // Clear the entire cart
   Future<void> clearCart() async {
+    initKey();
     await _storage.remove(_cartKey);
   }
 }

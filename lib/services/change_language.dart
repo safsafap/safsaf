@@ -9,14 +9,13 @@ class ChangeLanguage {
   final String _cartKey = 'lang'; // Define a key for cart storage
 
   Future<void> changeLanguage(
-      {required String lang, required String country}) async {
-    Locale locale = Locale(lang, country);
+      {required String lang}) async {
+    Locale locale = Locale(lang);
     Get.updateLocale(locale);
     final Map<String, dynamic> cartData = _storage.read(_cartKey) ?? {};
 
     // Add/update the item by its unique ID
     cartData['lang'] = lang;
-    cartData['country'] = country;
     // Save the updated cart back to storage
     await _storage.write(_cartKey, cartData);
   }
@@ -24,7 +23,7 @@ class ChangeLanguage {
   Locale initLanguage(){
     Map<String, dynamic> lang = getLanguage();
   
-    Locale locale = Locale(lang['lang'], lang['country']);
+    Locale locale = Locale(lang['lang']);
 
     return locale;
      
@@ -33,8 +32,8 @@ class ChangeLanguage {
   Map<String, dynamic> getLanguage() {
     final Map<String, dynamic> cartData = _storage.read(_cartKey) ??
         {
-          'lang': 'fr',
-          'country': 'FR',
+          'lang': 'ar',
+          
         };
 
     return cartData;

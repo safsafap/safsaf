@@ -10,13 +10,14 @@ class Product {
   final String discount;
   final String discountType;
   final int available;
-  final String imagePath;
+  String imagePath;
   final int categorie;
   final int sousCategorie;
   final int stock;
   final int newer;
   bool discountCalcul = true;
   int realprice;
+  final int min_commande;
 
   Product(
       {required this.id,
@@ -32,6 +33,7 @@ class Product {
       required this.sousCategorie,
       required this.stock,
       required this.newer,
+      this.min_commande = 1,
       this.discountCalcul = true,
       this.realprice = 0}) {
     if (discountCalcul) {
@@ -46,8 +48,7 @@ class Product {
         discount = "0",
         categorie = 13,
         sousCategorie = 15,
-        imagePath =
-            "images/6784ecb94e515-bystash-pistache-1-kg.jpg",
+        imagePath = "images/67cd72933a5f2-khbz-altakos.jpg",
         discountType = "fixed",
         quantiteLimite = "0",
         description = "",
@@ -56,27 +57,25 @@ class Product {
         id = 86,
         realprice = 100,
         stock = 0,
+        min_commande = 2,
         newer = 0;
 
   // Factory method to create a Product from a JSON map
   factory Product.fromJson(Map<dynamic, dynamic> json) {
-
-
-    
-
     return Product(
-        id: json['id']??0,
-        name: json['name']??'',
-        price: json['price']??'',
-        description: json['description']??'',
-        quantiteLimite: json['quantite_limite']??'',
-        discount: json['discount']??'',
-        discountType: json['discount_type']??'',
-        available: json['available']??1,
-        imagePath: json['image_path']??'',
-        categorie: json['categorie']??0,
-        sousCategorie: json['sous_categorie']??0,
-        newer: json['new']??0,
+        id: json['id'] ?? 0,
+        name: json['name'] ?? '',
+        price: json['price'] ?? '',
+        description: json['description'] ?? '',
+        quantiteLimite: json['quantite_limite'] ?? '',
+        discount: json['discount'] ?? '',
+        discountType: json['discount_type'] ?? '',
+        available: json['available'] ?? 1,
+        imagePath: json['image_path'] ?? '',
+        categorie: json['categorie'] ?? 0,
+        sousCategorie: json['sous_categorie'] ?? 0,
+        newer: json['new'] ?? 0,
+        min_commande: int.tryParse(json['min_commander'].toString()) ?? 1,
         stock: int.parse(json['stock']));
   }
 
@@ -94,14 +93,17 @@ class Product {
       'image_path': imagePath,
       'categorie': categorie,
       'sous_categorie': sousCategorie,
-      'stock': stock.toString()
+      'stock': stock.toString(),
+      'new': newer,
+      'min_commander': min_commande,
     };
   }
 
   CartModel toCartModel() {
     discountCalcul = false;
+    print("min_commander: $min_commande");
     return CartModel(
-        quantity: 1,
+        quantity: min_commande,
         id: id,
         name: name,
         description: description,
@@ -112,6 +114,7 @@ class Product {
         imagePath: imagePath,
         categorie: categorie,
         stock: stock,
+        min_commande: min_commande,
         discountCalcul: false);
   }
 
@@ -132,6 +135,5 @@ class Product {
       // No discount
       price = double.tryParse(price)?.toStringAsFixed(2) ?? "0.00";
     }
-
   }
 }

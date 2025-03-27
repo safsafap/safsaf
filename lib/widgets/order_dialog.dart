@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:multi_vendor/controllers/account_controller.dart';
 import 'package:multi_vendor/controllers/cart_controller.dart';
+import 'package:multi_vendor/controllers/msetting_controller.dart';
 import 'package:multi_vendor/main_constant.dart';
 import 'package:multi_vendor/models/cart_model.dart';
 import 'package:multi_vendor/models/order_model.dart';
@@ -12,6 +13,7 @@ class OrderDialog extends StatelessWidget {
   OrderDialog({super.key, required this.carts, required this.total});
   final CartController _cartController = Get.find(tag: 'cart');
   final AccountController _accountController = Get.find(tag: 'account');
+  final MSettingController _settingsController = Get.find(tag: 'setting');
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +26,8 @@ class OrderDialog extends StatelessWidget {
             width: 80,
             margin: const EdgeInsets.symmetric(vertical: 10),
             alignment: Alignment.center,
-            decoration: const BoxDecoration(
-                color: MAIN_COLOR, shape: BoxShape.circle),
+            decoration:
+                const BoxDecoration(color: MAIN_COLOR, shape: BoxShape.circle),
             child: const Icon(
               Icons.shopping_cart_checkout,
               color: Colors.white,
@@ -45,10 +47,15 @@ class OrderDialog extends StatelessWidget {
           onPressed: () async {
             Navigator.of(context).pop();
 
-            await _cartController.submitOrder(OrderModel.fromCart(
+            OrderModel order = OrderModel.fromCart(
+                isGrossist: _settingsController.isGrossist,
                 list: carts,
                 total: total,
-                id: _accountController.user?.id ?? 0));
+                id: _accountController.user?.id ?? 0);
+            
+
+
+            await _cartController.submitOrder(order);
           },
           style: ElevatedButton.styleFrom(
               backgroundColor: MAIN_COLOR,
